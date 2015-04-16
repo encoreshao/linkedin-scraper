@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 module Linkedin
 
-  class Profile
-
-    USER_AGENTS = ['Windows IE 6', 'Windows IE 7', 'Windows Mozilla', 'Mac Safari', 'Mac FireFox', 'Mac Mozilla', 'Linux Mozilla', 'Linux Firefox', 'Linux Konqueror']
+  class Profile < Base
 
     ATTRIBUTES = %w(
     name
@@ -27,17 +25,10 @@ module Linkedin
     current_companies
     recommended_visitors)
 
-    attr_reader :page, :linkedin_url
-
     def self.get_profile(url)
       Linkedin::Profile.new(url)
     rescue => e
       puts e
-    end
-
-    def initialize(url)
-      @linkedin_url = url
-      @page         = http_client.get(url)
     end
 
     def name
@@ -157,6 +148,7 @@ module Linkedin
 
     def to_json
       require 'json'
+
       ATTRIBUTES.reduce({}){ |hash,attr| hash[attr.to_sym] = self.send(attr.to_sym);hash }.to_json
     end
 
@@ -185,11 +177,6 @@ module Linkedin
       companies
     end
 
-    def parse_date(date)
-      date = "#{date}-01-01" if date =~ /^(19|20)\d{2}$/
-      Date.parse(date)
-    end
-
     def get_company_details(link)
       result = { :linkedin_company_url => get_linkedin_company_url(link) }
       page = http_client.get(result[:linkedin_company_url])
@@ -205,21 +192,5 @@ module Linkedin
       result
     end
 
-    def http_client
-      Mechanize.new do |agent|
-        agent.user_agent_alias = USER_AGENTS.sample
-        agent.max_history = 0
-      end
-    end
-
-    def get_linkedin_company_url(link)
-      http = %r{http://www.linkedin.com/}
-      https = %r{https://www.linkedin.com/}
-      if http.match(link) || https.match(link)
-        link
-      else
-        "http://www.linkedin.com/#{link}"
-      end
-    end
   end
 end
