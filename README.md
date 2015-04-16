@@ -16,9 +16,9 @@ Install the gem from RubyGems:
 
 Initialize a scraper instance
 
-    profile = Linkedin::Profile.get_profile("http://www.linkedin.com/in/jeffweiner08")
+    profile = Linkedin::Profile.fetch("http://www.linkedin.com/in/jeffweiner08")
 
-    company = Linkedin::Company.get_profile("http://www.linkedin.com/company/linkedin")
+    company = Linkedin::Company.fetch("http://www.linkedin.com/company/linkedin")
 
 
 The gem also comes with a binary and can be used from the command line to get a json response of the scraped data. It takes the url as the first argument.

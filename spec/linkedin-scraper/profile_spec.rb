@@ -5,7 +5,7 @@ describe Linkedin::Profile do
 
   let(:profile) { Linkedin::Profile.new('http://www.linkedin.com/in/jgrevich') }
 
-  describe '.get_profile' do
+  describe '.fetch' do
     it 'Create an instance of Linkedin::Profile class' do
       expect(profile).to be_instance_of Linkedin::Profile
     end

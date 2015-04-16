@@ -23,7 +23,7 @@ module Linkedin
     also_viewed
     )
 
-    def self.get_company(url)
+    def self.fetch(url)
       new(url)
     rescue => e
       puts e

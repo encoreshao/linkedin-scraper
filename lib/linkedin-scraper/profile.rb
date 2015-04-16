@@ -25,7 +25,7 @@ module Linkedin
     current_companies
     recommended_visitors)
 
-    def self.get_profile(url)
+    def self.fetch(url)
       Linkedin::Profile.new(url)
     rescue => e
       puts e
