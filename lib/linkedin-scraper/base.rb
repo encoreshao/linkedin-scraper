@@ -21,14 +21,15 @@ module Linkedin
     end
 
     def http_client
-      Mechanize.new do |agent|
+      Mechanize.new.tap do |agent|
         agent.user_agent_alias = USER_AGENTS.sample
 
         unless @options.empty?
-          agent.set_proxy(@options[:proxy_ip], @options[:proxy_port])
+          agent.set_proxy( @options[:proxy_host], @options[:proxy_port] )
         end if @options.kind_of?(Hash)
         
-        agent.max_history = 0
+        agent.max_history   = 0
+        agent.idle_timeout  = 20
       end
     end
 
