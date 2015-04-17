@@ -2,13 +2,23 @@
 
 require_relative '../lib/linkedin-scraper'
 
-if (ARGV[0].match(/^https?\:\/\/\w+\.linkedin\.com\//) == nil)
-	puts "[ERROR] - Please make sure that this domain is linkedin.com"
+if ARGV[0].nil?
+  puts "[ERROR] - Lack of Linkedin URL"
+elsif (ARGV[0].match(/^https?\:\/\/www\.linkedin\.com\//) == nil)
+	puts "[ERROR] - Please make sure that domain is www.linkedin.com"
 else
-	result = if (ARGV[0].match(/^https?\:\/\/\w+\.linkedin\.com\/(company|companies)\/((\w|\-|\&|\.)+)/) != nil) 
-		Linkedin::Company.new(ARGV[0])
+	result = if (ARGV[0].match(/^https?\:\/\/www\.linkedin\.com\/(company|companies)\/((\w|\-|\&|\.)+)/) != nil) 
+    if ARGV[1].nil?
+		  Linkedin::Company.new(ARGV[0])
+    else
+      Linkedin::Company.new(ARGV[0], ARGV[1])
+    end
 	else
-		Linkedin::Profile.new(ARGV[0])
+    if ARGV[1].nil?
+		  Linkedin::Profile.new(ARGV[0])
+    else
+      Linkedin::Profile.new(ARGV[0], ARGV[1])
+    end
 	end
 	puts JSON.pretty_generate JSON.parse(result.to_json)
 end

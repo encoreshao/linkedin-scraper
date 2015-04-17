@@ -26,7 +26,7 @@ module Linkedin
 
         unless @options.empty?
           agent.set_proxy(@options[:proxy_ip], @options[:proxy_port])
-        end
+        end if @options.kind_of?(Hash)
         
         agent.max_history = 0
       end
