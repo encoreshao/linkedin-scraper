@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+require File.expand_path('../base', __FILE__)
+
 module Linkedin
 
   class Profile < Base
